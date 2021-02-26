@@ -1,8 +1,20 @@
 const { models } = require('../../sequelize');
 const { getIdParam } = require('../helpers');
+const { Op } = require("sequelize");
 
 async function getAll(req, res) {
-	const openings = await models.opening.findAll();
+	const urlParams = req.query;
+	let wheres = {};
+	if('search' in urlParams) {
+		const search = urlParams['search'];
+		wheres['name'] = {
+			[Op.like]: '%' + search + '%',
+		};
+	}
+	console.log(wheres);
+	const openings = await models.opening.findAll({
+		'where': wheres
+	});
 	res.status(200).json(openings);
 };
 
