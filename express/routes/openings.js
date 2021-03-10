@@ -8,11 +8,9 @@ async function getAll(req, res) {
 	let wheres = {};
 	if(urlParams.search) {
 		const search = urlParams.search;
-		const searchWhere = Op.where(Op.func('lower', 'name'));
-		// wheres.name = {
-		// 	[Op.like]: '%' + search + '%',
-		// };
-		wheres.name = searchWhere;
+		wheres.name = {
+			[Op.iLike]: '%' + search + '%',
+		};
 	}
 	console.log(wheres);
 	const openings = await models.opening.findAll({

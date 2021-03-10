@@ -8,7 +8,7 @@ async function getAll(req, res) {
 	if('search' in urlParams) {
 		const search = urlParams['search'];
 		wheres['name'] = {
-			[Op.like]: '%' + search + '%',
+			[Op.iLike]: '%' + search + '%',
 		};
 	}
 	console.log(wheres);
