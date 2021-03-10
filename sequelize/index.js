@@ -6,12 +6,9 @@ const { applyExtraSetup } = require('./extra-setup');
 const sequelize = new Sequelize('postgresql://blq@localhost:5900/chessopenings');
 
 const modelDefiners = [
-	require('./models/user.model'),
-	require('./models/instrument.model'),
-	require('./models/orchestra.model'),
-	// Add more models here...
-	require('./models/opening.model'),
+	require('./models/category.model'),
 	require('./models/game.model'),
+	require('./models/opening.model'),
 ];
 
 // We define all models according to their files.

@@ -3,12 +3,9 @@ const bodyParser = require('body-parser');
 var cors = require('cors')
 
 const routes = {
-	users: require('./routes/users'),
-	instruments: require('./routes/instruments'),
-	orchestras: require('./routes/orchestras'),
-	// Add more routes here...
-	openings: require('./routes/openings'),
+	categories: require('./routes/categories'),
 	games: require('./routes/games'),
+	openings: require('./routes/openings'),
 };
 
 const app = express();

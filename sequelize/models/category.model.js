@@ -1,10 +1,9 @@
-
 const { DataTypes } = require('sequelize');
 
 // We export a function that defines the model.
 // This function will automatically receive as parameter the Sequelize connection object.
 module.exports = (sequelize) => {
-	sequelize.define('instrument', {
+	sequelize.define('category', {
 		// The following specification of the 'id' attribute could be omitted
 		// since it is the default.
 		id: {
@@ -13,22 +12,17 @@ module.exports = (sequelize) => {
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},
-		type: {
+		name: {
 			allowNull: false,
 			type: DataTypes.STRING,
 		},
-		// type: {
-		// 	allowNull: false,
-		// 	type: DataTypes.STRING,
-		// 	validate: {
-		// 		isIn: [['string', 'wind', 'percussion']]
-		// 	}
-		// },
-		purchaseDate: {
+		slug: {
 			allowNull: false,
-			type: DataTypes.DATE
+			type: DataTypes.STRING,
 		},
-		// We also want it to have a 'orchestraId' field, but we don't have to define it here.
-		// It will be defined automatically when Sequelize applies the associations.
+		sequence: {
+			allowNull: false,
+			type: DataTypes.STRING,
+		}
 	});
 };
