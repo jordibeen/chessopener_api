@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "setup-example-db": "node scripts/database/setup.js"
+    "setup-db": "node scripts/database/setup.js",
+    "api": "nodemon index.js"
   },
   "keywords": [],
   "author": "",
