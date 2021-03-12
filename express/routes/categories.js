@@ -5,13 +5,6 @@ const { Op } = require("sequelize");
 async function getAll(req, res) {
 	const urlParams = req.query;
 	let wheres = {};
-	if('search' in urlParams) {
-		const search = urlParams['search'];
-		wheres['name'] = {
-			[Op.iLike]: '%' + search + '%',
-		};
-	}
-	console.log(wheres);
 	const categories = await models.category.findAll({
 		'where': wheres
 	});

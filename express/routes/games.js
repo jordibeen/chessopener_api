@@ -2,7 +2,14 @@ const { models } = require('../../sequelize');
 const { getIdParam } = require('../helpers');
 
 async function getAll(req, res) {
-	const games = await models.game.findAll();
+	const urlParams = req.query;
+	let wheres = {};
+	if(urlParams.openingId) {
+		wheres['openingId'] = urlParams.openingId;
+	}
+	const games = await models.game.findAll({
+		'where': wheres
+	});
 	res.status(200).json(games);
 };
 
