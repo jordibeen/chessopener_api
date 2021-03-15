@@ -3,7 +3,6 @@ const bodyParser = require('body-parser');
 var cors = require('cors')
 
 const routes = {
-	categories: require('./routes/categories'),
 	games: require('./routes/games'),
 	openings: require('./routes/openings'),
 };

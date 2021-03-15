@@ -8,6 +8,11 @@ async function getAll(req, res) {
 	if(urlParams.categoryId) {
 		wheres['categoryId'] = urlParams.categoryId;
 	}
+	if(urlParams.sequence) {
+		wheres['sequence'] = {
+			[Op.like]: '%' + urlParams.sequence + '%'
+		}
+	}
 	const openings = await models.opening.findAll({
 		'where': wheres,
 		include: models.category
