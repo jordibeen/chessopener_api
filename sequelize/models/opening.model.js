@@ -27,6 +27,10 @@ module.exports = (sequelize) => {
 		sequence: {
 			allowNull: false,
 			type: DataTypes.STRING,
+		},
+		fen: {
+			allowNull: false,
+			type: DataTypes.STRING,
 		}
 	});
 };

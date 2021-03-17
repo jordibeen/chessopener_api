@@ -5,17 +5,18 @@ const { Op } = require("sequelize");
 async function getAll(req, res) {
 	const urlParams = req.query;
 	let wheres = {};
-	if(urlParams.categoryId) {
-		wheres['categoryId'] = urlParams.categoryId;
+	if(urlParams.search) {
+		wheres.name = {
+			[Op.iLike]: '%' + urlParams.search + '%'
+		}
 	}
 	if(urlParams.sequence) {
-		wheres['sequence'] = {
+		wheres.sequence = {
 			[Op.like]: '%' + urlParams.sequence + '%'
 		}
 	}
 	const openings = await models.opening.findAll({
-		'where': wheres,
-		include: models.category
+		'where': wheres
 	});
 	res.status(200).json(openings);
 };
@@ -25,9 +26,8 @@ async function getById(req, res) {
 	const opening = await models.opening.findOne({
 		'where': {
 			'id': id
-		},
-		include: models.category
-		});
+		}
+	});
 	if (opening) {
 		res.status(200).json(opening);
 	} else {
