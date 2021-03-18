@@ -4,6 +4,8 @@ const { Op } = require("sequelize");
 
 async function getAll(req, res) {
 	const urlParams = req.query;
+	let limit = null;
+	let offset = null;
 	let wheres = {};
 	if(urlParams.search) {
 		wheres.name = {
@@ -15,7 +17,15 @@ async function getAll(req, res) {
 			[Op.like]: '%' + urlParams.sequence + '%'
 		}
 	}
-	const openings = await models.opening.findAll({
+	if(urlParams.limit) {
+		limit = urlParams.limit
+	}
+	if(urlParams.offset) {
+		offset = urlParams.offset
+	}
+	const openings = await models.opening.findAndCountAll({
+		'limit': limit,
+		'offset': offset,
 		'where': wheres
 	});
 	res.status(200).json(openings);
