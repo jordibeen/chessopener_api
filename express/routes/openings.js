@@ -46,10 +46,6 @@ async function getById(req, res) {
 	}
 };
 
-function dayAgo(){
-  return Date.now() - (1000 * 60 * 60 * 24);
-}
-
 async function getStats(req, res) {
 	const id = getIdParam(req);
 	const opening = await models.opening.findByPk(id);
@@ -100,6 +96,40 @@ async function getStats(req, res) {
   }
 	res.status(200).json(stats);
 };
+
+async function listGames(req, res) {
+	const id = getIdParam(req);
+	const opening = await models.opening.findByPk(id);
+	if (!opening) {
+		res.status(404).send('404 - Not found');
+	}
+
+  if(!opening.lastLichessGamesFetch || opening.lastLichessGamesFetch < dayAgo()){
+    const urlEncodedFen = encodeURIComponent(opening.fen);
+    const gamesUrl = `https://explorer.lichess.ovh/lichess?variant=standard&recentGames=4&topGames=4&speeds[]=blitz&speeds[]=rapid&speeds[]=classical&ratings[]=2500&fen=${urlEncodedFen}`;
+    const lichessGames = await fetch(gamesUrl)
+      .then(res => res.json())
+      .then((result) => {
+        let g = []
+        g.push(...result.recentGames);
+        g.push(...result.topGames);
+        return g;
+      }, (error) => {
+        console.log(error);
+      });
+    await createNewGames(lichessGames, opening);
+    opening.update({
+      'lastLichessGamesFetch': new Date()
+    })
+  }
+  let games = await opening.getGames();
+	res.status(200).json(games);
+};
+
+// Non-route functions
+function dayAgo(){
+  return Date.now() - (1000 * 60 * 60 * 24);
+}
 
 async function createNewGames(lichessGames, opening) {
   for(const lichessGame of lichessGames){
@@ -156,34 +186,6 @@ async function createNewGames(lichessGames, opening) {
   }
 }
 
-async function listGames(req, res) {
-	const id = getIdParam(req);
-	const opening = await models.opening.findByPk(id);
-	if (!opening) {
-		res.status(404).send('404 - Not found');
-	}
-
-  if(!opening.lastLichessGamesFetch || opening.lastLichessGamesFetch < dayAgo()){
-    const urlEncodedFen = encodeURIComponent(opening.fen);
-    const gamesUrl = `https://explorer.lichess.ovh/lichess?variant=standard&recentGames=4&topGames=4&speeds[]=blitz&speeds[]=rapid&speeds[]=classical&ratings[]=2500&fen=${urlEncodedFen}`;
-    const lichessGames = await fetch(gamesUrl)
-      .then(res => res.json())
-      .then((result) => {
-        let g = []
-        g.push(...result.recentGames);
-        g.push(...result.topGames);
-        return g;
-      }, (error) => {
-        console.log(error);
-      });
-    await createNewGames(lichessGames, opening);
-    opening.update({
-      'lastLichessGamesFetch': new Date()
-    })
-  }
-  let games = await opening.getGames();
-	res.status(200).json(games);
-};
 
 module.exports = {
 	getAll,
