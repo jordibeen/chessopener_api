@@ -31,6 +31,14 @@ module.exports = (sequelize) => {
 		fen: {
 			allowNull: false,
 			type: DataTypes.STRING,
-		}
+		},
+		lastLichessStatsFetch: {
+			allowNull: true,
+			type: DataTypes.DATE,
+		},
+		lastLichessGamesFetch: {
+			allowNull: true,
+			type: DataTypes.DATE,
+		},
 	});
 };

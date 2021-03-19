@@ -67,8 +67,13 @@ for (const [routeName, routeController] of Object.entries(routes)) {
 
 // Custom routes
 app.get(
+	`/api/openings/:id/stats`,
+	makeHandlerAwareOfAsyncErrors(routes.openings.getStats)
+);
+
+app.get(
 	`/api/openings/:id/games`,
-	makeHandlerAwareOfAsyncErrors(routes.openings.listMasterGames)
+	makeHandlerAwareOfAsyncErrors(routes.openings.listGames)
 );
 
 module.exports = app;

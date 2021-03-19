@@ -3,7 +3,7 @@ const { DataTypes } = require('sequelize');
 // We export a function that defines the model.
 // This function will automatically receive as parameter the Sequelize connection object.
 module.exports = (sequelize) => {
-	sequelize.define('game', {
+	sequelize.define('stats', {
 		// The following specification of the 'id' attribute could be omitted
 		// since it is the default.
 		id: {
@@ -12,45 +12,25 @@ module.exports = (sequelize) => {
 			primaryKey: true,
 			type: DataTypes.INTEGER
 		},
-		lichessId: {
-			allowNull: false,
-			type: DataTypes.STRING,
-		},
-		winner: {
-			allowNull: false,
-			type: DataTypes.STRING,
-		},
-		speed: {
-			allowNull: false,
-			type: DataTypes.STRING,
-		},
-		whiteName: {
-			allowNull: false,
-			type: DataTypes.STRING,
-		},
-		whiteRating: {
+		amountPlayed: {
 			allowNull: false,
 			type: DataTypes.INTEGER,
 		},
-		blackName: {
-			allowNull: false,
-			type: DataTypes.STRING,
-		},
-		blackRating: {
+		whiteWins: {
 			allowNull: false,
 			type: DataTypes.INTEGER,
 		},
-		year: {
+		blackWins: {
 			allowNull: false,
 			type: DataTypes.INTEGER,
 		},
-		pgn: {
+		draws: {
 			allowNull: false,
-			type: DataTypes.TEXT,
+			type: DataTypes.INTEGER,
 		},
-		playedAt: {
-			allowNull: true,
-			type: DataTypes.DATE,
+		averageRating: {
+			allowNull: false,
+			type: DataTypes.INTEGER,
 		},
 	});
 };

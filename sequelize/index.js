@@ -8,6 +8,7 @@ const sequelize = new Sequelize('postgresql://blq@localhost:5900/chessopenings')
 const modelDefiners = [
 	require('./models/game.model'),
 	require('./models/opening.model'),
+	require('./models/stats.model'),
 ];
 
 // We define all models according to their files.
