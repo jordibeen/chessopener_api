@@ -8,27 +8,45 @@ async function getAll(req, res) {
 	let limit = null;
 	let offset = null;
 	let wheres = {};
+
 	if(urlParams.search) {
-		wheres.name = {
-			[Op.iLike]: '%' + urlParams.search + '%'
+		const searches = urlParams.search.split(' ');
+		if(searches.length >= 1){
+			let searchAnds = []
+			searches.forEach((search, i) => {
+				searchAnds.push({[Op.iLike]: '%' + search + '%'});
+			});
+			wheres.name = {
+				[Op.and]: searchAnds
+			}
+		}
+		else {
+			wheres.name = {
+				[Op.iLike]: '%' + urlParams.search + '%'
+			}
 		}
 	}
+
 	if(urlParams.sequence) {
 		wheres.sequence = {
 			[Op.like]: '%' + urlParams.sequence + '%'
 		}
 	}
+
 	if(urlParams.limit) {
 		limit = urlParams.limit
 	}
+
 	if(urlParams.offset) {
 		offset = urlParams.offset
 	}
+
 	const openings = await models.opening.findAndCountAll({
 		'limit': limit,
 		'offset': offset,
 		'where': wheres
 	});
+
 	res.status(200).json(openings);
 };
 
