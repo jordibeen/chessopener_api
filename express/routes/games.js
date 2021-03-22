@@ -15,7 +15,13 @@ async function getAll(req, res) {
 
 async function getById(req, res) {
 	const id = getIdParam(req);
-	const game = await models.game.findByPk(id);
+	const game = await models.game.findOne({
+		'where': {
+			'id': id
+		},
+		include: models.opening
+	});
+
 	if (game) {
 		res.status(200).json(game);
 	} else {
