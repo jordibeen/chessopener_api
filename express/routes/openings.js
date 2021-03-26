@@ -1,5 +1,5 @@
 const { models } = require('../../sequelize');
-const { getIdParam } = require('../helpers');
+const { getIdParam, getSlugParam } = require('../helpers');
 const { Op } = require("sequelize");
 const fetch = require('node-fetch');
 
@@ -55,6 +55,20 @@ async function getById(req, res) {
 	const opening = await models.opening.findOne({
 		'where': {
 			'id': id
+		}
+	});
+	if (opening) {
+		res.status(200).json(opening);
+	} else {
+		res.status(404).send('404 - Not found');
+	}
+};
+
+async function getBySlug(req, res) {
+	const slug = getSlugParam(req);
+	const opening = await models.opening.findOne({
+		'where': {
+			'slug': slug
 		}
 	});
 	if (opening) {
@@ -208,6 +222,7 @@ async function createNewGames(lichessGames, opening) {
 module.exports = {
 	getAll,
 	getById,
+	getBySlug,
 	getStats,
 	listGames
 };

@@ -66,11 +66,20 @@ for (const [routeName, routeController] of Object.entries(routes)) {
 }
 
 // Custom routes
+
+// Openings by slug
+app.get(
+	`/api/openings/s/:slug`,
+	makeHandlerAwareOfAsyncErrors(routes.openings.getBySlug)
+);
+
+// Opening stats
 app.get(
 	`/api/openings/:id/stats`,
 	makeHandlerAwareOfAsyncErrors(routes.openings.getStats)
 );
 
+// Opening games
 app.get(
 	`/api/openings/:id/games`,
 	makeHandlerAwareOfAsyncErrors(routes.openings.listGames)
