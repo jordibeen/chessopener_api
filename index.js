@@ -1,7 +1,7 @@
 
 const app = require('./express/app');
 const sequelize = require('./sequelize');
-const PORT = 7000;
+const PORT = process.env.PORT || 7000;
 
 async function assertDatabaseConnectionOk() {
 	console.log(`Checking database connection...`);
