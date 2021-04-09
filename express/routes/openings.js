@@ -44,7 +44,10 @@ async function getAll(req, res) {
 	const openings = await models.opening.findAndCountAll({
 		'limit': limit,
 		'offset': offset,
-		'where': wheres
+		'where': wheres,
+		'order': [
+			['sequence', 'ASC']
+		]
 	});
 
 	res.status(200).json(openings);
@@ -87,6 +90,7 @@ async function getStats(req, res) {
 
 	let stats = await opening.getStat();
 
+  // doesn't have stats yet
   if(!stats){
     const urlEncodedFen = encodeURIComponent(opening.fen);
 		const statsUrl = `https://explorer.lichess.ovh/lichess?variant=standard&recentGames=0&topGames=0&moves=0&speeds[]=blitz&speeds[]=rapid&speeds[]=classical&ratings[]=1600&ratings[]=1800&ratings[]=2200&ratings[]=2500&fen=${urlEncodedFen}`;
@@ -107,6 +111,7 @@ async function getStats(req, res) {
           console.log(error);
       });
   }
+  // lichess stats were last fetched a day ago
   if(opening.lastLichessStatsFetch < dayAgo()){
     const urlEncodedFen = encodeURIComponent(opening.fen);
 		const statsUrl = `https://explorer.lichess.ovh/lichess?variant=standard&recentGames=0&topGames=0&moves=0&speeds[]=blitz&speeds[]=rapid&speeds[]=classical&ratings[]=1600&ratings[]=1800&ratings[]=2200&ratings[]=2500&fen=${urlEncodedFen}`;
@@ -130,12 +135,17 @@ async function getStats(req, res) {
 };
 
 async function listGames(req, res) {
+	const urlParams = req.query;
+	let limit = null;
+	let offset = null;
+
 	const id = getIdParam(req);
 	const opening = await models.opening.findByPk(id);
 	if (!opening) {
 		res.status(404).send('404 - Not found');
 	}
 
+  // lichess games were never fetched before, of were last fetched a day ago
   if(!opening.lastLichessGamesFetch || opening.lastLichessGamesFetch < dayAgo()){
     const urlEncodedFen = encodeURIComponent(opening.fen);
     const gamesUrl = `https://explorer.lichess.ovh/lichess?variant=standard&recentGames=4&topGames=4&speeds[]=blitz&speeds[]=rapid&speeds[]=classical&ratings[]=2500&fen=${urlEncodedFen}`;
@@ -154,7 +164,26 @@ async function listGames(req, res) {
       'lastLichessGamesFetch': new Date()
     })
   }
-  let games = await opening.getGames();
+
+
+	if(urlParams.limit) {
+		limit = urlParams.limit
+	}
+
+	if(urlParams.offset) {
+		offset = urlParams.offset
+	}
+
+  let games = await models.game.findAndCountAll({
+    'limit': limit,
+    'offset': offset,
+    'where': {
+      'openingId': opening.id
+    },
+    'order': [
+      ['playedAt', 'DESC']
+    ]
+  });
 	res.status(200).json(games);
 };
 
