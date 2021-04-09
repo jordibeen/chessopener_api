@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings node index.js",
     "test": "echo \"Error: no test specified\" && exit 1",
-    "api": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings nodemon index.js",
+    "dev": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings nodemon index.js",
     "setup-dev-db": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings node scripts/database/setup.js"
   },
   "keywords": [],
@@ -14,6 +15,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "express": "^4.17.1",
+    "helmet": "^4.4.1",
     "node-fetch": "^2.6.1",
     "pg": "^8.5.1",
     "pg-hstore": "^2.3.3",
