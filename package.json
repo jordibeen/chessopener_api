@@ -4,10 +4,11 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "dev": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings nodemon index.js",
+    "start": "node index.js",
+    "setup-db": "node scripts/database/setup.js",
+    "start-dev": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings nodemon index.js",
     "setup-dev-db": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings node scripts/database/setup.js"
+    "test": "echo \"Error: no test specified\" && exit 1",
   },
   "keywords": [],
   "author": "",
