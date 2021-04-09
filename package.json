@@ -5,9 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node index.js",
-    "setup-db": "node scripts/database/setup.js",
-    "api": "nodemon index.js"
+    "api": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings nodemon index.js",
+    "setup-dev-db": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings node scripts/database/setup.js"
   },
   "keywords": [],
   "author": "",
