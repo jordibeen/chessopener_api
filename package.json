@@ -7,8 +7,8 @@
     "start": "node index.js",
     "setup-db": "node scripts/database/setup.js",
     "start-dev": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings nodemon index.js",
-    "setup-dev-db": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings node scripts/database/setup.js"
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup-dev-db": "DATABASE_CONNECTION_STRING=postgresql://blq@localhost:5900/chessopenings node scripts/database/setup.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
