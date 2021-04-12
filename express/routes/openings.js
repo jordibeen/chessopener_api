@@ -46,8 +46,10 @@ async function getAll(req, res) {
 		'offset': offset,
 		'where': wheres,
 		'order': [
+			[models.stats, 'averageRating', 'DESC NULLS LAST'],
 			['sequence', 'ASC']
-		]
+		],
+		include: models.stats
 	});
 
 	res.status(200).json(openings);
