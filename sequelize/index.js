@@ -3,7 +3,7 @@ const { applyRelationships } = require('./relationships');
 
 // In a real app, you should keep the database connection URL as an environment variable.
 // But for this example, we will just use a local SQLite database.
-const sequelize = new Sequelize(process.env.DATABASE_CONNECTION_STRING);
+const sequelize = new Sequelize(process.env.DATABASE_CONNECTION_STRING, { url: process.env.DATABASE_CONNECTION_STRING, dialect: 'postgres' });
 
 const modelDefiners = [
 	require('./models/game.model'),
