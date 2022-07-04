@@ -29,7 +29,7 @@ module.exports = (sequelize) => {
 			type: DataTypes.INTEGER,
 		},
 		averageRating: {
-			allowNull: false,
+			allowNull: true,
 			type: DataTypes.INTEGER,
 		},
 	});

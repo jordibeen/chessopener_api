@@ -17,7 +17,7 @@ module.exports = (sequelize) => {
 			type: DataTypes.STRING,
 		},
 		winner: {
-			allowNull: false,
+			allowNull: true,
 			type: DataTypes.STRING,
 		},
 		speed: {
