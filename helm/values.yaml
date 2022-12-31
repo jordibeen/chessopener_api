@@ -1,27 +1,19 @@
 replicaCount: 1
 
-env:
-  databaseConnectionString:
+app:
+  port: 7000
 
 image:
   repository:
-  tag: latest
-  pullPolicy: IfNotPresent
+  tag: main
+  pullPolicy: Always
 
-service:
-  type: ClusterIP
-  port: 7000
-
-autoscaling:
-  enabled: false
-  minReplicas: 1
-  maxReplicas: 100
-  targetCPUUtilizationPercentage: 80
-  # targetMemoryUtilizationPercentage: 80
+env:
+  DATABASE_CONNECTION_STRING:
 
 ingressRoute:
   enabled: false
+  isRoot: false
   host:
   tls:
     issuer:
-
