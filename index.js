@@ -1,4 +1,3 @@
-
 const app = require('./express/app');
 const sequelize = require('./sequelize');
 const PORT = process.env.PORT || 7000;
