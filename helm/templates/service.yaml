@@ -4,7 +4,7 @@ metadata:
   name: {{ .Release.Name }}
   namespace: {{ .Values.namespace }}
   labels:
-    component: homepage
+    component: api
     release: {{ .Release.Name }}
 spec:
   type: ClusterIP
@@ -14,5 +14,5 @@ spec:
       protocol: TCP
       name: http
   selector:
-    component: homepage
+    component: api
     release: {{ .Release.Name }}

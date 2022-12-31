@@ -5,7 +5,7 @@ metadata:
   name: {{ .Values.ingressRoute.host }}
   namespace: {{ .Values.namespace }}
   labels:
-    component: homepage
+    component: api
     release: {{ .Release.Name }}
 spec:
   entryPoints:
